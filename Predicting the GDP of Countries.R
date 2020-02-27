@@ -79,10 +79,14 @@ rm(b, i)
 
 summary(data) #spots the column with "NA"
 
+#
+#
 # Replace every NA with the mean of its column EXECPT for climate
 # For climate, replace with the median beacause climate has
 #qualitative values and not a quantitative so replacing it with the mean will 
 #most likely introduce a new variable which does not make any sense.
+#
+#
 
 data$Climate[c(which(is.na(data$Climate == T)))]<- median(data$Climate, na.rm = T)
 summary(data)
@@ -236,19 +240,22 @@ ggplot(TrueVSPredicted, aes(true, predicted))+
 
 evaluation<- evaluate(model, testSet, testLables)
 evaluation
-# I tried taking the z-score of the GDP but it did not help..
-# I tried many different models, with different number of hidden neurons,
-#different activation functions and batch sizes... 
-# I found that having more layers makes converging faster 
-# Usualy less than 50 epoch (with  layers) compared to a few hundreds
-#with one or two layers.
-# But the final result is still crap no matter what quickly it converges...
 
+##
+##
+## Our model is not doing to well...
+##
+##
+## I tried taking the z-score of the GDP but it did not help..
+## I tried many different models, with different number of hidden neurons,
+##different activation functions and batch sizes... 
+## I found that having more layers makes converging faster 
+## Usualy less than 50 epoch (with  layers) compared to a few hundreds#
+##with only one or two layers.
+## But the final result is still crap no matter what quickly it converges...
+##
+##
 
-
-######
-###### My model is crap !!!
-######
 
 # what to do ?
 #let's have a look at the data
@@ -281,7 +288,6 @@ trainSet2<- rescale(trainSet, to = c(0, 1))
 #
 #
 # Run the model one more time with the rescaled data
-#
 #
 #
 
@@ -332,18 +338,23 @@ ggplot(TrueVSPredicted, aes(true, predicted))+
   geom_point()+
   geom_abline(intercept = 0, slope = 1)
 
-# Just like earlier, many models were tested, 
-# I left the code on a single layered design so the converging time difference
-#between multi-layered and single-layered neural networks can be compared.
-# Even if the range of the data and other parameters has been modified the 
-#over all converging time is still noticeable.
+##
+##
+## Just like earlier, many models were tested, 
+## I left the code on a single layered design so the converging time difference
+##between multi-layered and single-layered neural networks can be compared.
+## Even if the range of the data and other parameters has been modified the 
+##over all diference converging time is still noticeable.
+##
+##
+
 
 #little cleaning
 rm(TestSetRange, i)
 
 ##
 ##
-## The model is still crap. Let's try a linear model.
+## Let's try a linear model.
 ##
 ##
 
@@ -370,7 +381,7 @@ ggplot(lmTestResults, aes(results, lmTestData$GDP))+
   geom_point()+
   geom_abline(intercept = 0, slope = 1)
 
-# The model is still pretty bad !!!
+# The linear model is not the best either !!!
 # What is wrong? Is the GDP unpredictable ? 
 
 
