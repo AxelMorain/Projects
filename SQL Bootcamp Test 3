@@ -1,0 +1,97 @@
+Assesment test 3 of The Complete SQL Bootcamp on Udemy
+
+I completed the test and went a step above. By purposely miscreating the tables,
+I challenged myself with some alter functions. I also tested some table
+constrains to make sure everything was in the green. 
+
+Test 3:
+
+Complete the following task:
+
+Create a new database called "School" this database should have two tables: teachers
+ and students.
+
+The students table should have columns for student_id, first_name,last_name,
+ homeroom_number, phone,email, and graduation year.
+
+The teachers table should have columns for teacher_id, first_name, last_name,
+
+homeroom_number, department, email, and phone.
+
+The constraints are mostly up to you, but your table constraints do have to consider
+ the following:
+
+ 1.We must have a phone number to contact students in case of an emergency.
+ 2.We must have ids as the primary key of the tables
+ 3.Phone numbers and emails must be unique to the individual.
+Once you've made the tables, insert a student named Mark Watney (student_id=1) who
+ has a phone number of 777-555-1234 and doesn't have an email. He graduates in 2035
+ and has 5 as a homeroom number.
+
+Then insert a teacher names Jonas Salk (teacher_id = 1) who as a homeroom number of
+ 5 and is from the Biology department. His contact info is: jsalk@school.org and a
+ phone number of 777-555-4321.
+
+SQL code:
+
+-- Create a teachers and students data set for a school
+
+-- For the teacher dataset:
+create table teachers(
+	teacher_id serial primary key,
+	first_name text not null,
+	last_name text not null);
+
+select * from teachers;
+
+alter table teachers add column	homeroom_number smallint,
+	add column	department text,
+	add column	email text not null unique, 
+	add column	phone text not null unique;
+	
+select * from teachers;
+
+insert into teachers (first_name, last_name, homeroom_number, department, email, phone)
+	values('Jonas','Salk',5,'Biology','jsalk@school.org', '777-555-4321' );
+
+insert into teachers (first_name, last_name, homeroom_number, department, email, phone)
+	values('Jonas','Salk',100,'Math','jsalk2@school.org', '787-000-1254' );
+	
+insert into teachers (first_name, last_name, homeroom_number, department, email, phone)
+	values('Jonny','Bravo',9,'Physical Education','jsalk@school.org','777-555-4321');
+-- Does not run because of the 'unique' constrain on email ^^
+select * from teachers;
+
+
+-- For the students data sets
+create table students (
+	student_id serial primary key, 
+	first_name text not null,
+	last_name text not null, 
+	homeroom_number smallint , 
+	phone character not null, -- unique was forgotten
+	email character not null, -- unique was forgotten
+	graduation_year smallint );
+	
+select * from students;
+
+ALTER TABLE students ALTER COLUMN phone SET DATA TYPE text,
+					 ALTER COLUMN email SET DATA TYPE text;
+
+select * from students
+
+ALTER TABLE students ADD CONSTRAINT phone UNIQUE (phone);
+ALTER TABLE students ADD CONSTRAINT email UNIQUE (email);
+
+select * from students
+
+insert into students (first_name, last_name, homeroom_number, phone, email)
+	values ( 'Jimish', 'Patel', 6, '890-237-3857', 'jpatel@coolschool.com');
+
+insert into students (first_name, last_name, homeroom_number, phone, email)
+	values ( 'Bob', 'Bobie', 6, '890-237-3857', 'jpatel@coolschool.com');
+-- The profile cannot be added because it violates unique constraint
+--"email". 
+
+--All the tables are sets !
+
