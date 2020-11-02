@@ -382,7 +382,7 @@ ggplot(lmTestResults, aes(results, lmTestData$GDP))+
   geom_abline(intercept = 0, slope = 1)
 
 # The linear model is not the best either !!!
-# What is wrong? Is the GDP unpredictable ? 
+# Is the GDP unpredictable ? 
 
 
 
